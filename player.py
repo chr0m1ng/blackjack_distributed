@@ -1,6 +1,12 @@
+import socket
+
+
 class Player:
-    def __init__(self, ip, name):
+
+    def __init__(self, ip, port, name):
+        self.id = ip + port
         self.ip = ip
+        self.port = int(port[1:])
         self.name = name
         self.finished = False
         self.points = 0
@@ -17,4 +23,4 @@ class Player:
             self.finished = True
 
     def __str__(self):
-        return '%s - %s - finished: %s' % (self.name, self.ip, self.isFinished())
+        return '%s - %s - finished: %s' % (self.name, self.id, self.isFinished())
