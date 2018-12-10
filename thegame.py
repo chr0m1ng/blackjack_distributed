@@ -85,7 +85,7 @@ def playing(croupier):
         croupier.finish(ME)
         croupier.showGameStatus()
     elif op == 3:
-        sendCroupier(CROUPIER)
+        sendCroupier(croupier)
         return
     playing(croupier)
 

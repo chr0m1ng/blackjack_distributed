@@ -32,36 +32,32 @@ class Croupier:
 
     def finish(self, playerID):
         player = self.findPlayer(playerID)
-        if player != None:  
+        if player != None:
             player.setFinished(True)
-    
-    def obterVencedor(self): 
-        
+
+    def obterVencedor(self):
+
         maior = Player('127.0.0.1', '5001', 'X')
         maior.points = -1
-        
+
         for player in self.playersList:
             if player.points <= 21 and player.points > maior.points:
                 maior = player
         return maior
-    
+
     def showGameStatus(self):
-        #winner = next((x for x in self.playersList if x.points == 21), None)
+        t = PrettyTable(['NAME', 'POINTS', 'FINISHED'])
+        for player in self.playersList:
+            t.add_row([player.name, player.points, player.isFinished()])
+        print(t)
+
         if self.allFinished():
             winner = self.obterVencedor()
             if winner != None:
                 print('Winner Winner Chicken Dinner!\nCongratulations %s' %
-                    winner.name)
+                      winner.name)
             else:
                 print('NO WINNERS MY FRIENDS!')
-        else:
-            #score = 'Common guys, the game is ON\n====SCOREBOARD====\nNAME\t\tPOINTS\t\tSTILL PLAYING\n'
-            t = PrettyTable(['NAME', 'POINTS', 'FINISHED'])
-            for player in self.playersList:
-                #score += ('%s\t\t%s\t\t%s\n' %
-                          #(player.name, player.points, player.isFinished()))
-                t.add_row([player.name, player.points, player.isFinished()])
-            print(t)
 
     def getCard(self, playerID):
         player = self.findPlayer(playerID)
@@ -71,5 +67,7 @@ class Croupier:
                     card = self.deck.pop()
                     player.newCard(card)
                     self.showPlayer(player, card)
+                    if player.isFinished():
+                        self.showGameStatus()
             else:
                 self.showGameStatus()

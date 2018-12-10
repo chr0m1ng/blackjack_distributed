@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 numpy = "*"
+prettytable = "*"
 
 [dev-packages]
 "autopep8" = "*"
